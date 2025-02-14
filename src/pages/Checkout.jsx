@@ -16,7 +16,7 @@ import {
   Elements,
   useElements,
 } from "@stripe/react-stripe-js";
-import AddWalletModal from "../components/addWalletModal";
+import AddWalletModal from "../components/AddWalletModal";
 import { FaRegCreditCard } from "react-icons/fa";
 
 const Checkout = () => {

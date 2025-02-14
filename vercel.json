@@ -1,0 +1,3 @@
+{
+  "builds": [{ "src": "src/pages/Checkout.jsx", "use": "@vercel/node" }]
+}
