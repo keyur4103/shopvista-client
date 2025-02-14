@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 // import { RadioGroup } from "@headlessui/react";
-import { useParams } from "react-router-dom";
+import { data, replace, useNavigate, useParams } from "react-router-dom";
 // import { addProductInCart } from "../../services/User/Cart/cartAPI";
 // import { useForm } from "react-hook-form";
 // import { yupResolver } from "@hookform/resolvers/yup";
@@ -14,6 +14,8 @@ import Spinner from "../utils/Spinner";
 import { useForm } from "react-hook-form";
 import { RadioGroup } from "@headlessui/react";
 import { addProductInCart } from "../services/Cart/cartAPI";
+import { getCart } from "../services/Cart/cartAPI";
+
 import { addProductInWishlist } from "../services/Wishlist/wishlistAPI";
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
@@ -29,6 +31,7 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const queryClient = useQueryClient();
   const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate(); // Hook to navigate programmatically
 
   const {
     data: productData,
@@ -57,14 +60,14 @@ const ProductDetail = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!selectedColor) {
-      toast.error("Please select a Color 🙏");
-      return;
-    }
-    if (!selectedSize) {
-      toast.error("Please select a Size 🙏");
-      return;
-    }
+    // if (!selectedColor) {
+    //   toast.error("Please select a Color 🙏");
+    //   return;
+    // }
+    // if (!selectedSize) {
+    //   toast.error("Please select a Size 🙏");
+    //   return;
+    // }
     const cartData = {
       colorId: selectedColor,
       sizeId: selectedSize,
@@ -104,7 +107,7 @@ const ProductDetail = () => {
     <>
       {isFetching ? (
         <div className="flex items-center justify-center vh-100">
-          <Spinner />
+          {/* <Spinner /> */}
         </div>
       ) : (
         <div>
@@ -197,108 +200,100 @@ const ProductDetail = () => {
 
                     <form className="mt-10">
                       {/* Colors */}
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-900">
-                          Color
-                        </h3>
-                        <RadioGroup
-                          value={selectedColor}
-                          onChange={setSelectedColor}
-                          className="mt-4"
-                        >
-                          <RadioGroup.Label className="sr-only">
-                            Choose a color
-                          </RadioGroup.Label>
-                          <div className="flex items-center space-x-3">
-                            {productData?.color?.map((color) => {
-                              return (
-                                <RadioGroup.Option
-                                  key={color.name}
-                                  value={color._id}
-                                  className={({ active, checked }) =>
-                                    classNames(
-                                      active && checked
-                                        ? "ring ring-offset-1"
-                                        : "",
-                                      !active && checked ? "ring-2" : "",
-                                      "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none"
-                                    )
-                                  }
-                                >
-                                  <RadioGroup.Label
-                                    as="span"
-                                    className="sr-only"
-                                  >
-                                    {color.name}
-                                  </RadioGroup.Label>
-                                  <span
-                                    aria-hidden="true"
+                      {productData?.color?.length > 1 &&
+                        productData.color[0].name !== "" && (
+                          <div>
+                            <h3 className="text-sm font-medium text-gray-900">
+                              Color
+                            </h3>
+                            <RadioGroup
+                              value={selectedColor}
+                              onChange={setSelectedColor}
+                              className="mt-4"
+                            >
+                              <RadioGroup.Label className="sr-only">
+                                Choose a color
+                              </RadioGroup.Label>
+                              <div className="flex items-center space-x-3">
+                                {productData.color.map((color) => (
+                                  <RadioGroup.Option
                                     key={color.name}
-                                    className={`bg-${color.name}-600
-                                        h-8 w-8 rounded-full border border-black border-opacity-10`}
-                                  />
-                                </RadioGroup.Option>
-                              );
-                            })}
+                                    value={color._id}
+                                    className={({ active, checked }) =>
+                                      classNames(
+                                        active && checked
+                                          ? "ring ring-offset-1"
+                                          : "",
+                                        !active && checked ? "ring-2" : "",
+                                        "relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none"
+                                      )
+                                    }
+                                  >
+                                    <RadioGroup.Label
+                                      as="span"
+                                      className="sr-only"
+                                    >
+                                      {color.name}
+                                    </RadioGroup.Label>
+                                    <span
+                                      aria-hidden="true"
+                                      className={`bg-${color.name}-600 h-8 w-8 rounded-full border border-black border-opacity-10`}
+                                    />
+                                  </RadioGroup.Option>
+                                ))}
+                              </div>
+                            </RadioGroup>
                           </div>
-                        </RadioGroup>
-                      </div>
+                        )}
 
                       {/* Size */}
-                      <div className="mt-10">
-                        {/* <div className="flex items-center justify-between">
-                          <h3 className="text-sm font-medium text-gray-900">
-                            Size
-                          </h3>
-                          <a
-                            href="#"
-                            className="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                          >
-                            Size guide
-                          </a>
-                        </div> */}
-                        <RadioGroup
-                          value={selectedSize}
-                          onChange={setSelectedSize}
-                          className="mt-4"
-                        >
-                          <RadioGroup.Label className="sr-only">
-                            Choose a size
-                          </RadioGroup.Label>
-                          <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
-                            {productData?.size?.map((size) => (
-                              <RadioGroup.Option
-                                key={size._id}
-                                value={size._id}
-                                className={({ active, checked }) =>
-                                  `group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm
-          ${active && checked ? "ring ring-offset-1" : ""}
-          ${!active && checked ? "ring-2" : ""}`
-                                }
-                              >
-                                <RadioGroup.Label
-                                  as="span"
-                                  id={`size-choice-${size._id}-label`}
-                                  className="pointer-events-none"
-                                >
-                                  {size.name}
-                                </RadioGroup.Label>
-                                <span
-                                  className={`pointer-events-none absolute -inset-px rounded-md ${
-                                    size.checked ? "border" : "border-2"
-                                  } ${
-                                    size.checked
-                                      ? "border-indigo-500"
-                                      : "border-transparent"
-                                  }`}
-                                  aria-hidden="true"
-                                />
-                              </RadioGroup.Option>
-                            ))}
+                      {productData?.size?.length > 0 &&
+                        productData.size[0].name !== "" && (
+                          <div className="mt-10">
+                            <RadioGroup
+                              value={selectedSize}
+                              onChange={setSelectedSize}
+                              className="mt-4"
+                            >
+                              <RadioGroup.Label className="sr-only">
+                                Choose a size
+                              </RadioGroup.Label>
+                              <div className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4">
+                                {productData.size.map((size) => (
+                                  <RadioGroup.Option
+                                    key={size._id}
+                                    value={size._id}
+                                    className={({ active, checked }) =>
+                                      `group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6 cursor-pointer bg-white text-gray-900 shadow-sm
+                  ${active && checked ? "ring ring-offset-1" : ""}
+                  ${!active && checked ? "ring-2" : ""}`
+                                    }
+                                  >
+                                    <RadioGroup.Label
+                                      as="span"
+                                      id={`size-choice-${size._id}-label`}
+                                      className="pointer-events-none"
+                                    >
+                                      {size.name}
+                                    </RadioGroup.Label>
+                                    <span
+                                      className={`pointer-events-none absolute -inset-px rounded-md ${
+                                        size.checked ? "border" : "border-2"
+                                      } ${
+                                        size.checked
+                                          ? "border-indigo-500"
+                                          : "border-transparent"
+                                      }`}
+                                      aria-hidden="true"
+                                    />
+                                  </RadioGroup.Option>
+                                ))}
+                              </div>
+                            </RadioGroup>
                           </div>
-                        </RadioGroup>
-                      </div>
+                        )}
 
+                      {/* Buttons */}
                       <div className="flex">
                         <button
                           type="submit"
@@ -325,7 +320,7 @@ const ProductDetail = () => {
                               <Spinner width={6} height={6} />
                             </div>
                           ) : (
-                            "Add to Whishlist"
+                            "Add to Wishlist"
                           )}
                         </button>
                       </div>

@@ -34,7 +34,7 @@ const Checkout = () => {
   const [openModal, setOpenModal] = useState(false);
   const [addAmount, setAddAmount] = useState(0);
   const publishableKey =
-    "pk_test_51LzxA5SHOUlzFrbDsa8XwGpBwoHgKqkyQ8nMfnchut72i1XxyuhKivj9HKbQD3rodrEl80ss2WtXbWFc8E2sFINO00XWTlL38s";
+    "pk_test_51QDr5DP1IPTmJpHhB1UyjE56Jo0wcV0A7RkUBMbLDQt3ci3Jy9VTqQ6d6CnziVK8s0dMSwAaDcibAl9h0tQfQipx00uKZ6KiTw";
   // const [stripePromise, setStripePromise] = useState(null);
 
   // useState(() => {
@@ -99,6 +99,7 @@ const Checkout = () => {
     console.log("data", data);
     console.log("itemId", itemId);
     mutate({ data, itemId });
+    navigate("/success");
   };
 
   const handleQuantityChange = async (itemId, newQuantity) => {
@@ -132,7 +133,7 @@ const Checkout = () => {
       queryClient.invalidateQueries("allCart");
 
       dispatch(setClearCart());
-      navigate("/order");
+      navigate("/success");
       // setShowForm(false);
       // onCloseAddBrandModal();
     },
@@ -161,7 +162,7 @@ const Checkout = () => {
   // payment integration
   const makePayment = async ({ address, paymentMethodType }) => {
     const stripe = await loadStripe(
-      "pk_test_51LzxA5SHOUlzFrbDsa8XwGpBwoHgKqkyQ8nMfnchut72i1XxyuhKivj9HKbQD3rodrEl80ss2WtXbWFc8E2sFINO00XWTlL38s"
+      "pk_test_51QDr5DP1IPTmJpHhB1UyjE56Jo0wcV0A7RkUBMbLDQt3ci3Jy9VTqQ6d6CnziVK8s0dMSwAaDcibAl9h0tQfQipx00uKZ6KiTw"
     );
 
     const headers = {
@@ -396,7 +397,10 @@ const Checkout = () => {
                         name="type"
                         id="type1"
                         defaultChecked=""
-                        checked={isWalletDisabled  === false && paymentMethodType == "wallet"}
+                        checked={
+                          isWalletDisabled === false &&
+                          paymentMethodType == "wallet"
+                        }
                         disabled={isWalletDisabled}
                         style={{
                           cursor: isWalletDisabled ? "not-allowed" : "pointer",
@@ -525,7 +529,7 @@ const Checkout = () => {
 const AddMoneyForm = () => (
   <Elements
     stripe={loadStripe(
-      "pk_test_51LzxA5SHOUlzFrbDsa8XwGpBwoHgKqkyQ8nMfnchut72i1XxyuhKivj9HKbQD3rodrEl80ss2WtXbWFc8E2sFINO00XWTlL38s"
+      "pk_test_51QDr5DP1IPTmJpHhB1UyjE56Jo0wcV0A7RkUBMbLDQt3ci3Jy9VTqQ6d6CnziVK8s0dMSwAaDcibAl9h0tQfQipx00uKZ6KiTw"
     )}
   >
     <Checkout />

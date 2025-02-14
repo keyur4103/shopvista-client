@@ -128,21 +128,29 @@ const Order = () => {
                               {order?.cartItems?.map((item, index) => (
                                 <tr key={index}>
                                   <td className="px-4 py-2">
-                                    {item?.product.name}
+                                    {item?.product?.name}
                                   </td>
                                   <td className="px-4 py-2 space-x-2 whitespace-nowrap">
                                     <div
                                       key={index}
                                       style={{
-                                        backgroundColor: `${item?.color.name}`,
+                                        backgroundColor:
+                                          item?.color?.name || "transparent", // Fallback to transparent if color doesn't exist
                                         width: "23px",
                                         height: "23px",
                                         borderRadius: "50%",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        border: item?.color?.name
+                                          ? "none"
+                                          : "1px solid #ccc", // Optional: Add border if no color
                                       }}
-                                    ></div>
+                                    >
+                                    </div>
                                   </td>
                                   <td className="px-4 py-2">
-                                    {item?.size.name}
+                                    {item?.size?.name ?? "N/A"}
                                   </td>
                                   <td className="px-4 py-2">
                                     {item?.quantity}

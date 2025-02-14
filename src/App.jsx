@@ -26,18 +26,18 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/*" element={<PageNotFound />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/reset-password" element={<ResetPass />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/forgot" element={<ForgotPass />} />
 
           <Route element={<Layout />}>
             <Route path="/confirm" element={<ConfirmEmail />} />
-            <Route path="/forgot" element={<ForgotPass />} />
             <Route path="/wishlist" element={<WishList />} />
-            <Route path="/reset-password" element={<ResetPass />} />
             <Route path="/" element={<Home />} />
             <Route path="/product/:slug" element={<ProductDetail />} />
             <Route path="/checkout" element={<AddMoneyForm />} />
             <Route path="/order" element={<Order />} />
             <Route path="/faq" element={<FAQsUI />} />
-            <Route path="/success" element={<Success />} />
             <Route path="/cancel" element={<Cancel />} />
             <Route path="/transaction" element={<WalletTransactionHistory />} />
           </Route>

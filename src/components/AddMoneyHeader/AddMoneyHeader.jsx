@@ -6,7 +6,7 @@ import Header from "../../layout/Header/Header";
 const AddMoneyHeader = () => {
   const [stripePromise, setStripePromise] = useState(() =>
     loadStripe(
-      "pk_test_51LzxA5SHOUlzFrbDsa8XwGpBwoHgKqkyQ8nMfnchut72i1XxyuhKivj9HKbQD3rodrEl80ss2WtXbWFc8E2sFINO00XWTlL38s"
+      "pk_test_51QDr5DP1IPTmJpHhB1UyjE56Jo0wcV0A7RkUBMbLDQt3ci3Jy9VTqQ6d6CnziVK8s0dMSwAaDcibAl9h0tQfQipx00uKZ6KiTw"
     )
   );
 

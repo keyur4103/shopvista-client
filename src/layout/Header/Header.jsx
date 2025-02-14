@@ -21,6 +21,7 @@ import {
   Elements,
   useElements,
 } from "@stripe/react-stripe-js";
+import logo from "../../assets/shopping-bag.png";
 
 const Header = () => {
   const token = useSelector((state) => state.auth.token);
@@ -41,7 +42,7 @@ const Header = () => {
   const [isWalletOpen, setWalletOpen] = useState(false); // State variable for wallet dropdown visibility
   const [addAmount, setAddAmount] = useState(0);
   // const publishableKey =
-  //   "pk_test_51LzxA5SHOUlzFrbDsa8XwGpBwoHgKqkyQ8nMfnchut72i1XxyuhKivj9HKbQD3rodrEl80ss2WtXbWFc8E2sFINO00XWTlL38s";
+  //   "pk_test_51QDr5DP1IPTmJpHhB1UyjE56Jo0wcV0A7RkUBMbLDQt3ci3Jy9VTqQ6d6CnziVK8s0dMSwAaDcibAl9h0tQfQipx00uKZ6KiTw";
   // const [stripepromise, setstripepromise] = useState(false);
 
   // useState(() => {
@@ -91,11 +92,7 @@ const Header = () => {
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a className="flex items-center space-x-3 rtl:space-x-reverse">
-          <img
-            src="src/assets/shopping-bag.png"
-            className="h-8"
-            alt="Flowbite Logo"
-          />
+          <img src={logo} className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             ShopVista
           </span>

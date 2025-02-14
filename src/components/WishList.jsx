@@ -67,7 +67,7 @@ const WishList = () => {
 
               return (
                 <div key={item.product._id} className="relative group">
-                  <Link to={`/product/${item.product._id}`} className="block">
+                  <Link to={`/product/${item.product.slug}`} className="block">
                     <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
                       <img
                         src={`http://localhost:3000/${item.product.coverImage}`}

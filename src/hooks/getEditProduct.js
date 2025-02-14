@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getProductEdit } from "../services/Product/productApi";
+// import { useNavigate } from "react-router-dom"; // Import useNavigate
+// const navigate = useNavigate(); // Initialize useNavigate hook
 
 const getEditProduct = (slug) => {
   const {
