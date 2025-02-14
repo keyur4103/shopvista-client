@@ -14,7 +14,7 @@ import Cart from "../../components/Cart";
 import { useQuery } from "@tanstack/react-query";
 import { IoMdWallet } from "react-icons/io";
 import { getWallet } from "../../services/Wallet/walletAPI";
-import AddWalletModal from "../../components/addWalletModal";
+import AddWalletModal from "./../../components/AddWalletModal";
 import {
   CardElement,
   useStripe,
